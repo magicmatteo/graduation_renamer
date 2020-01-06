@@ -1,4 +1,4 @@
-import os, sys, shutil, time
+import os, sys, shutil, time, string
 
 try:
 	if sys.argv[1].lower() == '--help':
@@ -12,16 +12,19 @@ except IndexError:
 	pass
 
 ## Get date and set applicable years for folder names
-current_year = 2019#int(input("Please enter graduation year: "))
+current_year = int(input("Please enter graduation year: "))
 
 allowed_folder_names = []
 for i in range(7):
 	allowed_folder_names.append(current_year - i)
 
-print(allowed_folder_names)
-
 ## Remove spaces from names ie. Luca De Felize -> luca_de_felize
-
+def rename_file(fn):
+	intab = ' -'
+	outtab = '__'
+	fn = fn.rsplit('.')[0] + str(i) + ".jpg"
+	translation = fn.maketrans(intab, outtab)
+	return fn.translate(translation)
 
 ## Rename Phase
 newdir = './renamed_photos/'
@@ -33,8 +36,8 @@ for i in allowed_folder_names:
 			for file in files:
 				if not os.path.exists(newdir):
 					os.mkdir(newdir)
-				new_name = file.rsplit('.')[0] + str(i) + "_.jpg"
-				print(file + " renamed to " + new_name)
+				new_name = rename_file(file)
 				sourcefile = os.path.realpath(os.path.join(folder,file))
 				shutil.copy(sourcefile, (newdir + new_name))
+				print(file + " renamed to " + new_name)
 
