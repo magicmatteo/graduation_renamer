@@ -6,10 +6,7 @@ This application will rename all photos of current year students from past years
 
 You will need to have a **copy** of the last 7 years worth of student photos. You will need to remove any non applicable classes and prepare the folder structure as below.
 
-The database is built based on their grade 6 photo names. If the grade 6 photo names are in format *"firstname_lastname.jpg"* you will need to pass in a command line switch that will ensure the photos are renamed to lastname_firstname. 
-The command line switch is **--first-last**
-
-If the grade 6 photo names are already last_first, run app without any switches.
+The database is built based on their grade 6 photo names. If the grade 6 photo names are in format *"firstname_lastname.jpg"* you will need to answer *'n'* in the menu prompt.
 
 Any photos that are unable to match will be put inside a folder called "failures-move-manually"
 
@@ -21,7 +18,7 @@ Note that each year folder must be name as the year only. ie "2020" **not "Stude
 
 Note that each folder year should only contain the classes of which the current students would have been in.
 
-Note that in the below example, the database will be built off the current year (2022) which contains grade 6 photos stored in their respective class folders. In this example, we have the undesirable naming convention of *first_last.jpg* ie. *harry_potter.jpg*. This means we must pass the *--last-first* parameter when we run the app.
+Note that in the below example, the database will be built off the current year (2022) which contains grade 6 photos stored in their respective class folders. In this example, we have the undesirable naming convention of *first_last.jpg* ie. *harry_potter.jpg*. This means we must answer 'n' in the menu prompt.
 
 ```
 project
@@ -72,3 +69,29 @@ project
 │   │   │   ...
 │   │...
 ```
+
+## Example runthrough
+
+### Using Python
+1. Download and install Python 3 from [here](https://www.python.org/downloads/)
+2. Prepare folder structure
+3. Shift + Right-Click in project root folder in File Explorer -> Click *Open in Powershell*
+4. From powershell run:
+        python ./main.py
+
+### Using compiled windows EXE
+1. Prepare folder structure
+2. Run main.exe from project root folder and follow prompt
+
+## Compiling .exe for Windows
+
+Assuming python 3 installed on Windows.
+
+1. Install pyinstaller
+        pip install -r ./requirements.txt
+2. Run pyinstaller on main.py
+        pyinstaller ./main.py
+
+Application will be built into ./dist/main
+
+
