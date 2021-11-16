@@ -5,10 +5,11 @@ from datetime import datetime
 ### STATIC VARIABLES:
 current_year = datetime.now().year
 newdir = './renamed_photos/'
+last_first = False
 ### ------------------- ###
 
-def help_check():
-	# Check for --help as arguement and display help text
+def arg_check():
+	# Check for args
 	try:
 		if sys.argv[1].lower() == '--help':
 			print(
@@ -17,6 +18,10 @@ def help_check():
 	folders etc. It will then put renamed photos into ./renamed_photos folder
 	'''		)
 			sys.exit()
+		
+		if sys.argv[1].lower() == '--last-first':
+			last_first = True
+
 	except IndexError:
 		pass
 
@@ -99,13 +104,15 @@ def main_func():
 					if not os.path.exists(newdir + class_):
 						os.mkdir(newdir + class_)
 					
+					if last_first == True:
+						file = swap_first_last(file)
 					new_name = rename_file(file, fileyear)
 					sourcefile = os.path.realpath(os.path.join(subdir ,dfile))
 					shutil.copy(sourcefile, (newdir + f'/{class_}/' + new_name))
 					print(dfile, 'from', folder, 'renamed to', new_name)
 
 def main():
-	help_check()
+	arg_check()
 	main_func()
 
 if __name__ == "__main__":
