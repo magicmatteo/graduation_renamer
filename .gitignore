@@ -1,4 +1,8 @@
-venv
+venv/
+__pycache__/
+build/
+dist/
+main.spec
 2017
 2018
 renamed_photos
