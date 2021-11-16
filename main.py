@@ -19,11 +19,24 @@ def arg_check():
 	'''		)
 			sys.exit()
 		
-		if sys.argv[1].lower() == '--last-first':
+		elif sys.argv[1].lower() == '--last-first':
+			global last_first
 			last_first = True
 
 	except IndexError:
 		pass
+
+def menu():
+	print("Welcome to the Graduation photo renamer. Please see go to https://github.com/magicmatteo/graduation_renamer for instructions on how to use. \n")
+	answer = input(f"Are your {current_year} photos named in convention \"Last First\"? (Y/N):  ")
+
+	if answer.lower() == ('n' or 'no'):
+		global last_first
+		last_first = True
+	
+	print("\n Will be renaming all photos to last_first.jpg\n")
+
+		
 
 def folder_names(year_):
 	# Create a list of applicable folder names to store the photos in
@@ -76,6 +89,10 @@ def class_database():
 
 def main_func():
 	# Main function that does the work. Renames all the files and puts them in folders
+	
+	#Call menu
+	menu()
+
 	cldb = class_database()
 	folders = folder_names(current_year)
 	for i in folders:
@@ -94,9 +111,13 @@ def main_func():
 					for item in cldb:
 						if file in cldb[item]:
 							class_ = str(item)
+							if last_first == True:
+								file = swap_first_last(file)
+
 						elif swap_first_last(file) in cldb[item]:
 							class_ = str(item)
-							file = swap_first_last(file)
+							if last_first == False:
+								file = swap_first_last(file)
 					
 					# Create folder structure if it doesnt exist
 					if not os.path.exists(newdir):
@@ -104,8 +125,6 @@ def main_func():
 					if not os.path.exists(newdir + class_):
 						os.mkdir(newdir + class_)
 					
-					if last_first == True:
-						file = swap_first_last(file)
 					new_name = rename_file(file, fileyear)
 					sourcefile = os.path.realpath(os.path.join(subdir ,dfile))
 					shutil.copy(sourcefile, (newdir + f'/{class_}/' + new_name))
